@@ -57,28 +57,25 @@ p <- Data %>%
 
 p
 
-#set working directory to current File location
-# setwd(getSrcDirectory()[1])
-studentData<-read_csv("sur.zip")
-glimpse(studentData)
+DataScaled %>%
+  ggplot( aes(x=TotalScore)) +
+  geom_histogram(  bins =20, fill="#69b3a2", color="#e9ecef", alpha=0.9) +
+  ggtitle("Bins = 20") +
+  theme_ipsum() +
+  theme(
+    plot.title = element_text(size=15)
+  )
 
-#scale the data scale(A, center = TRUE, scale = TRUE)
 
-# Bulgariascaled<-scale(
-#   Bulgaria%>%
-#     # filter(!is.na(YearsCodingProf)&!is.na(YearsCoding))%>%
-#     mutate( YearsCodingProf = ifelse(is.na(YearsCodingProf),YearsCoding,YearsCodingProf))%>%
-#     select(Salary,YearsCodingProf,YearsCoding)
-# )
 
-mean(Bulgaria$Salary)
-ggplot(Bulgaria,aes(x=Salary))+
+
+ggplot(DataScaled,aes(x=TotalScore))+
   geom_histogram(bins=15)+
   # scale_x_log10()+
-  geom_vline(aes(xintercept = mean(Salary)),col='red',size=2) +
-  geom_vline(aes(xintercept = median(Salary)),col='blue',size=2)+
-  geom_vline(aes(xintercept = quantile(Bulgaria$Salary)[2]),col='yellow',size=2)+
-  geom_vline(aes(xintercept = quantile(Bulgaria$Salary)[4]),col='yellow',size=2)
+  geom_vline(aes(xintercept = mean(TotalScore)),col='red',size=2) +
+  geom_vline(aes(xintercept = median(TotalScore)),col='blue',size=2)+
+  geom_vline(aes(xintercept = quantile(DataScaled$TotalScore)[2]),col='yellow',size=2)+
+  geom_vline(aes(xintercept = quantile(DataScaled$TotalScore)[4]),col='yellow',size=2)
 
-ggplot(Bulgaria,aes(x = 1,y=Salary))+
+ggplot(DataScaled,aes(x = 1,y=TotalScore))+
   geom_boxplot()
