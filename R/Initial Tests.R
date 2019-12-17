@@ -66,9 +66,9 @@ DataScaled %>%
     plot.title = element_text(size=15)
   )
 
-
-
-
+DataScaled[35,]
+DataScaled[35,7:12]
+DataScaled[35,]$TotalScore
 ggplot(DataScaled,aes(x=TotalScore))+
   geom_histogram(bins=15)+
   # scale_x_log10()+
@@ -79,3 +79,28 @@ ggplot(DataScaled,aes(x=TotalScore))+
 
 ggplot(DataScaled,aes(x = 1,y=TotalScore))+
   geom_boxplot()
+#Correlation Analisis
+# mat : is a matrix of data
+# ... : further arguments to pass to the native R cor.test function
+cor.mtest <- function(mat, ...) {
+  mat <- as.matrix(mat)
+  n <- ncol(mat)
+  p.mat<- matrix(NA, n, n)
+  diag(p.mat) <- 0
+  for (i in 1:(n - 1)) {
+    for (j in (i + 1):n) {
+      tmp <- cor.test(mat[, i], mat[, j], ...)
+      p.mat[i, j] <- p.mat[j, i] <- tmp$p.value
+    }
+  }
+  colnames(p.mat) <- rownames(p.mat) <- colnames(mat)
+  p.mat
+}
+# matrix of the p-value of the correlation
+p.mat <- cor.mtest(DataScaled[,getcharCols!=T])
+getcharCols <- map_chr(DataScaled,is.character)
+M<-cor(DataScaled[,getcharCols!=T])
+corrplot(M, method="circle")
+
+corrplot(M, type="upper", order="hclust", 
+         p.mat = p.mat, sig.level = 0.05)
