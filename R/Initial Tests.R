@@ -54,7 +54,14 @@ p <- Data %>%
   theme(
     plot.title = element_text(size=15)
   )
-
+# p <- Data %>%
+#   ggplot( aes(x=`30m sprint`)) +
+#   geom_histogram( binwidth=10, fill="#69b3a2", color="#e9ecef", alpha=0.9) +
+#   ggtitle("Bin size = 3") +
+#   theme_ipsum() +
+#   theme(
+#     plot.title = element_text(size=15)
+#   )
 p
 
 DataScaled %>%

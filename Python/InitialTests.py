@@ -8,17 +8,21 @@ from scipy import stats
 from statsmodels.graphics.gofplots import qqplot
 
 #df = pd.read_csv("train.csv")
+#D:\Work\PhDIvanSimeonov\Python
 df = pd.read_csv("Data.csv") 
 
 # the first five entries of the dataset 
 df.describe()
 
 cols = list(df.columns)
-toRemove = ['Methodology','Name','Age']
+toRemove = ['Methodology','','Age']
 
 for col in toRemove:
     cols.remove(col)
 
+#for i in df.index:
+#    print(df.iloc[i,1:2])
+    
 dfScaled = df[cols].copy()
 
 invert = ["30m sprint","4x10m shuttle","Box Drill ","Dribble strong","Dribble weak"]
@@ -37,7 +41,6 @@ for col in cols:
 dfScaled['Name'] = df['Name']
 
 dfScaled['TotalScore'] = dfScaled['TotalScore']/len(cols)
-
 
 
 sns.distplot(dfScaled['TotalScore'], kde=True, rug=True);
